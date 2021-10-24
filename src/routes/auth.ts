@@ -3,9 +3,9 @@ import { isEmpty, validate } from "class-validator";
 import cookie from "cookie";
 import { Request, Response, Router } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../entities/User";
+import User from "../entities/User";
 
-import auth from '../middleware/auth'
+import auth from "../middleware/auth";
 
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -70,7 +70,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 const me = (_: Request, res: Response) => {
-  return res.json(res.locals.user)
+  return res.json(res.locals.user);
 };
 
 const logout = (_: Request, res: Response) => {

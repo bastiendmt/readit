@@ -3,21 +3,21 @@ import { createConnection } from "typeorm";
 import express from "express";
 import morgan from "morgan";
 
-import dotven from 'dotenv'
+import dotven from "dotenv";
 import authRoutes from "./routes/auth";
 import trim from "./middleware/trim";
 
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser";
 
-dotven.config()
+dotven.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(trim)
-app.use(cookieParser())
+app.use(trim);
+app.use(cookieParser());
 
 app.get("/", (_, res) => res.send("Hello World"));
 app.use("/api/auth", authRoutes);
