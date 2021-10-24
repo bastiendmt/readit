@@ -1,9 +1,9 @@
-import { validate, IsEmpty, isEmail, isEmpty } from "class-validator";
-import { Request, Response, Router } from "express";
-import { User } from "../entities/User";
 import bcrypt from "bcrypt";
-
+import { isEmpty, validate } from "class-validator";
+import cookie from "cookie";
+import { Request, Response, Router } from "express";
 import jwt from "jsonwebtoken";
+import { User } from "../entities/User";
 
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
@@ -50,17 +50,60 @@ const login = async (req: Request, res: Response) => {
       return res.status(401).json({ password: "Password is incorrect" });
     }
 
-    const token = jwt.sign(
-      { username },
-      "eflkdsqjflkea86752znflkdjqmi54423pouj"
+    const token = jwt.sign({ username }, process.env.JWT_SECRET);
+
+    res.set(
+      "Set-Cookie",
+      cookie.serialize("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 3600,
+        path: "/",
+      })
     );
 
-    return res.json({ user, token });
+    return res.json(user);
   } catch (err) {}
+};
+
+const me = async (req: Request, res: Response) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) throw new Error("Unauthenticated");
+
+    const { username }: any = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({ username });
+
+    if (!user) throw new Error("Unauthenticated");
+
+    return res.json(user);
+  } catch (err) {
+    return res.status(401).json({ error: "Unauthenticated" });
+  }
+};
+
+const logout = (req: Request, res: Response) => {
+  res.set(
+    "Set-Cookie",
+    cookie.serialize("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      expires: new Date(0),
+      path: "/",
+    })
+  );
+
+  return res.status(200).json({ sucess: true });
 };
 
 const router = Router();
 router.post("/register", register);
 router.post("/login", login);
+router.get("/me", me);
+router.get("/logout", logout);
 
 export default router;
