@@ -1,13 +1,12 @@
-import bcrypt from "bcrypt";
-import { Exclude } from "class-transformer";
-import { IsEmail, Length } from "class-validator";
 import {
   BeforeInsert,
   Column,
   Entity as TOEntity,
   Index,
+  JoinColumn,
   ManyToOne,
 } from "typeorm";
+import { makeId, slugify } from "../utils/helper";
 import Entity from "./Entity";
 import User from "./User";
 
@@ -36,5 +35,12 @@ export default class Post extends Entity {
   subName: string;
 
   @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
+
+  @BeforeInsert()
+  makeIdAndSlug() {
+    this.identifier = makeId(7);
+    this.slug = slugify(this.title);
+  }
 }
