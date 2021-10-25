@@ -7,7 +7,7 @@ import { createConnection } from "typeorm";
 import trim from "./middleware/trim";
 import authRoutes from "./routes/auth";
 import postsRoutes from "./routes/posts";
-
+import subsRoutes from "./routes/subs";
 
 dotven.config();
 
@@ -22,6 +22,7 @@ app.use(cookieParser());
 app.get("/", (_, res) => res.send("Hello World"));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
+app.use("/api/subs", subsRoutes);
 
 app.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
