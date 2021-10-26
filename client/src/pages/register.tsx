@@ -2,6 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import InputGroup from "../components/InputGroup";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -22,8 +23,8 @@ export default function Register() {
 
       console.log(res);
     } catch (err) {
-      console.log(err)
-      setErrors(err.response.data)
+      console.log(err);
+      setErrors(err.response.data);
     }
   };
 
@@ -59,35 +60,32 @@ export default function Register() {
               </label>
             </div>
 
-            <div className="mb-2">
-              <input
-                type="email"
-                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+            <InputGroup
+              className="mb-2"
+              value={email}
+              setValue={setEmail}
+              placeholder="Email"
+              error={errors.email}
+              type="email"
+            />
 
-            <div className="mb-2">
-              <input
-                type="text"
-                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
+            <InputGroup
+              className="mb-2"
+              value={username}
+              setValue={setUsername}
+              placeholder="Username"
+              error={errors.username}
+              type="text"
+            />
 
-            <div className="mb-2">
-              <input
-                type="password"
-                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <InputGroup
+              className="mb-4"
+              value={password}
+              setValue={setPassword}
+              placeholder="Password"
+              error={errors.password}
+              type="password"
+            />
 
             <button className="w-full py-2 mb-4 text-xs font-bold text-white uppercase bg-blue-500 border-blue-500 rounded">
               sign up
