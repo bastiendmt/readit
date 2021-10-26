@@ -1,7 +1,32 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 
 export default function Register() {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [agreement, setAgreement] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+
+  const submitForm = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const res = await axios.post("/auth/register", {
+        email,
+        password,
+        username,
+      });
+
+      console.log(res);
+    } catch (err) {
+      console.log(err)
+      setErrors(err.response.data)
+    }
+  };
+
   return (
     <div className="flex">
       <Head>
@@ -20,12 +45,14 @@ export default function Register() {
           <p className="mb-10 text-xs">
             By continuing, you agree to our User Agreement and Privacy Policy
           </p>
-          <form>
+          <form onSubmit={submitForm}>
             <div className="mb-6">
               <input
                 type="checkbox"
                 className="mr-1 cursor-pointer"
                 id="agreement"
+                checked={agreement}
+                onChange={(e) => setAgreement(e.target.checked)}
               />
               <label htmlFor="agreement" className="text-xs cursor-pointer">
                 I agree to get emails about cool stuff on Readit
@@ -37,6 +64,8 @@ export default function Register() {
                 type="email"
                 className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -45,6 +74,8 @@ export default function Register() {
                 type="text"
                 className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
 
@@ -53,6 +84,8 @@ export default function Register() {
                 type="password"
                 className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
