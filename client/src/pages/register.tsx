@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/dist/client/router";
 import Head from "next/head";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
@@ -11,19 +12,25 @@ export default function Register() {
   const [agreement, setAgreement] = useState(false);
   const [errors, setErrors] = useState<any>({});
 
+  const router = useRouter();
+
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
 
+    if (!agreement) {
+      setErrors({ ...errors, agreement: "You must agree to T&Cs" });
+      return;
+    }
+
     try {
-      const res = await axios.post("/auth/register", {
+      await axios.post("/auth/register", {
         email,
         password,
         username,
       });
 
-      console.log(res);
+      router.push("/login");
     } catch (err) {
-      console.log(err);
       setErrors(err.response.data);
     }
   };
@@ -58,6 +65,9 @@ export default function Register() {
               <label htmlFor="agreement" className="text-xs cursor-pointer">
                 I agree to get emails about cool stuff on Readit
               </label>
+              <small className="block font-medium text-red-600">
+                {errors.agreement}
+              </small>
             </div>
 
             <InputGroup
