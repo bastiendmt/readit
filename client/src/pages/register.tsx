@@ -10,7 +10,7 @@ export default function Register() {
       </Head>
 
       <div
-        className="w-40 h-screen bg-cover"
+        className="h-screen bg-cover w-36"
         style={{ backgroundImage: "url('/images/background.jpg')" }}
       ></div>
 
@@ -35,7 +35,7 @@ export default function Register() {
             <div className="mb-2">
               <input
                 type="email"
-                className="w-full px-3 py-2 border border-gray-200 rounded b-full g-gray-100"
+                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Email"
               />
             </div>
@@ -43,7 +43,7 @@ export default function Register() {
             <div className="mb-2">
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-200 rounded b-full g-gray-100"
+                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Username"
               />
             </div>
@@ -51,7 +51,7 @@ export default function Register() {
             <div className="mb-2">
               <input
                 type="password"
-                className="w-full px-3 py-2 border border-gray-200 rounded b-full g-gray-100"
+                className="transition duration-200 w-full p-3 outline-none rounded bordrer-gray-300 border du bg-gray-50 focus:bg-white hover:bg-white"
                 placeholder="Password"
               />
             </div>
