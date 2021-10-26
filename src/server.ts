@@ -8,6 +8,7 @@ import trim from "./middleware/trim";
 import authRoutes from "./routes/auth";
 import postsRoutes from "./routes/posts";
 import subsRoutes from "./routes/subs";
+import cors from "cors";
 
 dotven.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(trim);
 app.use(cookieParser());
+app.use(cors());
 
 app.get("/", (_, res) => res.send("Hello World"));
 app.use("/api/auth", authRoutes);
