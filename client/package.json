@@ -10,6 +10,7 @@
   "dependencies": {
     "autoprefixer": "^10.3.7",
     "axios": "^0.24.0",
+    "dayjs": "^1.10.7",
     "next": "12.0.0",
     "postcss": "^8.2.15",
     "react": "17.0.2",

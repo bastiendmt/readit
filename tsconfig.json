@@ -18,7 +18,7 @@
     // Extra
     "alwaysStrict": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true
