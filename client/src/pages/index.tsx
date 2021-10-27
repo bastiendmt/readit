@@ -89,9 +89,19 @@ export default function Home() {
             </div>
           ))}
         </div>
-
         {/* Sidebar */}
       </div>
     </div>
   );
 }
+
+// SSR
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   try {
+//     const res = await Axios.get("/posts");
+
+//     return { props: { posts: res.data } };
+//   } catch (err) {
+//     return { props: { error: "Something went wrong" } };
+//   }
+// };
