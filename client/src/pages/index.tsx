@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="pt-12">
-      <Head>
+      <Head> 
         <title>Readit: the front page of the internet</title>
       </Head>
 

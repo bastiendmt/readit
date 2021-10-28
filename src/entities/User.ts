@@ -1,15 +1,17 @@
-import bcrypt from "bcrypt";
-import { Exclude } from "class-transformer";
 import { IsEmail, Length } from "class-validator";
 import {
-  BeforeInsert,
-  Column,
   Entity as TOEntity,
+  Column,
   Index,
+  BeforeInsert,
   OneToMany,
 } from "typeorm";
+import bcrypt from "bcrypt";
+import { Exclude } from "class-transformer";
+
 import Entity from "./Entity";
 import Post from "./Post";
+import Vote from "./Vote";
 
 @TOEntity("users")
 export default class User extends Entity {
@@ -20,7 +22,7 @@ export default class User extends Entity {
 
   @Index()
   @IsEmail(undefined, { message: "Must be a valid email address" })
-  @Length(1, 255, { message: "Is empty" })
+  @Length(1, 255, { message: "Email is empty" })
   @Column({ unique: true })
   email: string;
 
@@ -36,6 +38,9 @@ export default class User extends Entity {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: Vote[];
 
   @BeforeInsert()
   async hashPassword() {
