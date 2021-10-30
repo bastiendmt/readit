@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Axios from "axios";
 
+import classnames from "classnames";
+
 interface PostCardProps {
   post: Post;
 }
@@ -55,7 +57,11 @@ export default function PostCard({
           className="w-6 mx-auto text-grey-400 rounder cursor hover:bg-gray-300 hover:text-red-500"
           onClick={() => vote(1)}
         >
-          <i className="icon-arrow-up"></i>
+          <i
+            className={classnames("icon-arrow-up", {
+              "text-red-500": userVote == 1,
+            })}
+          />
         </div>
         <p className="text-xs font-bold">{voteScore}</p>
         {/* Downvote */}
@@ -63,7 +69,11 @@ export default function PostCard({
           className="w-6 mx-auto text-grey-400 rounder cursor hover:bg-gray-300 hover:text-blue-500"
           onClick={() => vote(-1)}
         >
-          <i className="icon-arrow-down"></i>
+         <i
+            className={classnames("icon-arrow-down", {
+              "text-blue-600": userVote == -1,
+            })}
+          />
         </div>
       </div>
       {/* Post data section */}

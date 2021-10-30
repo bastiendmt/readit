@@ -32,6 +32,10 @@ const getPosts = async (_: Request, res: Response) => {
       relations: ["comments", "votes", "sub"],
     });
 
+    if (res.locals.user) {
+      posts.forEach((p) => p.setUserVote(res.locals.user));
+    }
+
     return res.json(posts);
   } catch (err) {
     console.log(err);
