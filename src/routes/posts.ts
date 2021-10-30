@@ -28,6 +28,7 @@ const getPosts = async (_: Request, res: Response) => {
   try {
     const posts = await Post.find({
       order: { createdAt: "DESC" },
+      relations: ["comments", "votes", "sub"],
     });
 
     return res.json(posts);
@@ -59,12 +60,12 @@ const commentOnPost = async (req: Request, res: Response) => {
     const post = await Post.findOneOrFail({ identifier, slug });
 
     const comment = new Comment({ body, user: res.locals.user, post });
-    await comment.save()
+    await comment.save();
 
-    return res.json(comment)
+    return res.json(comment);
   } catch (err) {
-    console.log(err)
-    return res.status(404).json({error : 'Post not found'})
+    console.log(err);
+    return res.status(404).json({ error: "Post not found" });
   }
 };
 

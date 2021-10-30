@@ -6,7 +6,10 @@ export interface Post {
   subName: string;
   createdAt: string;
   updatedAt: string;
-  username: string
+  username: string;
   // Virtual fields
-  url: string
+  url: string;
+  voteScore?: number;
+  commentCount?: number;
+  userVote?: number;
 }
