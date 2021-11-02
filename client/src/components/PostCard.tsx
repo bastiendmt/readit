@@ -69,7 +69,7 @@ export default function PostCard({
           className="w-6 mx-auto text-grey-400 rounder cursor hover:bg-gray-300 hover:text-blue-500"
           onClick={() => vote(-1)}
         >
-         <i
+          <i
             className={classnames("icon-arrow-down", {
               "text-blue-600": userVote == -1,
             })}
@@ -80,15 +80,15 @@ export default function PostCard({
       <div className="w-full p-2">
         <div className="flex items-center">
           <Link href={`/r/${subName}`}>
-            <>
-              <img
-                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                className="w-6 h-6 mr-1 rounded-full cursor-pointer"
-              ></img>
-              <a className="text-xs font-bold hover:underline cursor-pointer">
-                /r/{subName}
-              </a>
-            </>
+            <img
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              className="w-6 h-6 mr-1 rounded-full cursor-pointer"
+            ></img>
+          </Link>
+          <Link href={`/r/${subName}`}>
+            <a className="text-xs font-bold hover:underline cursor-pointer">
+              /r/{subName}
+            </a>
           </Link>
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span>
