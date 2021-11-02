@@ -4,7 +4,7 @@ import { useAuthDispatch, useAuthState } from "../context/auth";
 import ReaditLogo from "../images/readit.svg";
 
 const Navbar: React.FC = () => {
-  const { authenticated, loading } = useAuthDispatch();
+  const { authenticated, loading } = useAuthState();
   const dispatch = useAuthDispatch();
 
   const logout = () => {
