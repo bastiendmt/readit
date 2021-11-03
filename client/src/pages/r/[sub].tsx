@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
 import { Sub } from "../../types";
+import Image from "next/image";
 
 export default function SubPage() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function SubPage() {
   }
 
   return (
-    <div className="pt-12">
+    <div>
       <Head>
         <title>{sub?.title}</title>
       </Head>
@@ -36,6 +37,7 @@ export default function SubPage() {
         <>
           {/* Sub info & images */}
           <div>
+            {/* Banner Image */}
             <div className="bg-blue-500">
               {sub.bannerUrl ? (
                 <div
@@ -50,6 +52,18 @@ export default function SubPage() {
               ) : (
                 <div className="h-20 bg-blue-500"></div>
               )}
+            </div>
+            {/* Sub meta data */}
+            <div className="h-20 bg-white">
+              <div className="container flex">
+                <Image
+                  src={sub.imageUrl}
+                  alt="Sub"
+                  className="rounded-full"
+                  width={80}
+                  height={80}
+                />
+              </div>
             </div>
           </div>
           {/* Posts & Sidebar */}
