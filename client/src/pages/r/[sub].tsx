@@ -1,15 +1,17 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
+import { Sub } from "../../types";
 
-export default function Sub() {
+export default function SubPage() {
   const router = useRouter();
   const subName = router.query.sub;
 
-  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
+  const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
 
   if (error) {
-    router.push('/')
+    router.push("/");
   }
 
   let postsMarkup;
@@ -25,8 +27,37 @@ export default function Sub() {
   }
 
   return (
-    <div className="container flex pt-5">
-      {sub && <div className="w-160">{postsMarkup}</div>}
+    <div className="pt-12">
+      <Head>
+        <title>{sub?.title}</title>
+      </Head>
+
+      {sub && (
+        <>
+          {/* Sub info & images */}
+          <div>
+            <div className="bg-blue-500">
+              {sub.bannerUrl ? (
+                <div
+                  className="h-56 bg-blue-500"
+                  style={{
+                    backgroundImage: `url(${sub.bannerUrl})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                ></div>
+              ) : (
+                <div className="h-20 bg-blue-500"></div>
+              )}
+            </div>
+          </div>
+          {/* Posts & Sidebar */}
+          <div className="container flex pt-5">
+            <div className="w-160">{postsMarkup}</div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

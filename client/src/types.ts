@@ -15,8 +15,22 @@ export interface Post {
 }
 
 export interface User {
-  usersname: string
-  email: string
-  createdAt: string
-  updatedAt: string
+  usersname: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Sub {
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+  title: string;
+  description: string;
+  posts: Post[];
+  bannerUrn: string;
+  imageUrn: string;
+  //Virtuals
+  bannerUrl: string;
+  imageUrl: string;
 }
