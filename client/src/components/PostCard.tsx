@@ -1,12 +1,12 @@
-import React from "react";
-import Link from "next/link";
-import { Post } from "../types";
-
+import Axios from "axios";
+import classnames from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Axios from "axios";
+import Link from "next/link";
+import React from "react";
+import { Post } from "../types";
 
-import classnames from "classnames";
+dayjs.extend(relativeTime);
 
 interface PostCardProps {
   post: Post;
