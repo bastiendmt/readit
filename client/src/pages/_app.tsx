@@ -10,6 +10,17 @@ import "../styles/tailwind.css";
 Axios.defaults.baseURL = "http://localhost:5000/api";
 Axios.defaults.withCredentials = true;
 
+const fetcher = async (url: string) => {
+  console.log(`getting ${url}`);
+  try {
+    const res = await Axios.get(url);
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    throw err.repsonse.data;
+  }
+};
+
 function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const authRoutes = ["/register", "/login"];
@@ -23,8 +34,9 @@ function App({ Component, pageProps }: AppProps) {
     >
       <AuthProvider>
         {!authRoute && <Navbar />}
-
-        <Component {...pageProps} />
+        <div className={authRoute ? "" : "pt-12"}>
+          <Component {...pageProps} />
+        </div>
       </AuthProvider>
     </SWRConfig>
   );
