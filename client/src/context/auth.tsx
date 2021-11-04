@@ -10,7 +10,7 @@ interface State {
 
 interface Action {
   type: string;
-  payload?: any;
+  payload: any;
 }
 
 const StateContext = createContext<State>({
@@ -37,9 +37,8 @@ const reducer = (state: State, { type, payload }: Action) => {
       };
     case "STOP_LOADING":
       return { ...state, loading: false };
-
-    case "DEFAULT":
-      throw new Error(`Unknown action type ${type}`);
+    default:
+      throw new Error(`Unknow action type: ${type}`);
   }
 };
 
@@ -64,7 +63,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         dispatch("STOP_LOADING");
       }
     }
-
     loadUser();
   }, []);
 

@@ -1,15 +1,34 @@
+import Axios from "axios";
+import classnames from "classnames";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
+import { useAuthState } from "../../context/auth";
 import { Sub } from "../../types";
-import Image from "next/image";
 
 export default function SubPage() {
+  // Local state
+  const [ownSub, setOwnSub] = useState(false);
+
+  //Global state
+  const { user, authenticated } = useAuthState();
+
+  // Utils
   const router = useRouter();
   const subName = router.query.sub;
+  const fileInputRef = createRef<HTMLInputElement>();
 
   const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
+
+  useEffect(() => {
+    if (!sub) return;
+
+    console.log(authenticated && user.username === sub.username);
+    setOwnSub(authenticated && user.username === sub.username);
+  }, [sub]);
 
   if (error) {
     router.push("/");
@@ -27,6 +46,30 @@ export default function SubPage() {
     ));
   }
 
+  const onpenFileInput = (type: string) => {
+    if (!ownSub) return;
+    fileInputRef.current.name = type;
+    fileInputRef.current.click();
+  };
+
+  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", fileInputRef.current.name);
+
+    try {
+      const res = await Axios.post<Sub>(`/subs/${sub.name}/image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -35,10 +78,16 @@ export default function SubPage() {
 
       {sub && (
         <>
+          <input type="file" hidden ref={fileInputRef} onChange={uploadImage} />
           {/* Sub info & images */}
           <div>
             {/* Banner Image */}
-            <div className="bg-blue-500">
+            <div
+              className={classnames("bg-blue-500", {
+                "cursor-pointer": ownSub,
+              })}
+              onClick={() => onpenFileInput("banner")}
+            >
               {sub.bannerUrl ? (
                 <div
                   className="h-56 bg-blue-500"
@@ -60,7 +109,10 @@ export default function SubPage() {
                   <Image
                     src={sub.imageUrl}
                     alt="Sub"
-                    className="rounded-full"
+                    className={classnames("rounded-full", {
+                      "cursor-pointer": ownSub,
+                    })}
+                    onClick={() => onpenFileInput("image")}
                     width={70}
                     height={70}
                   />
