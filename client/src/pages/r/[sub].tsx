@@ -21,7 +21,11 @@ export default function SubPage() {
   const subName = router.query.sub;
   const fileInputRef = createRef<HTMLInputElement>();
 
-  const { data: sub, error } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
+  const {
+    data: sub,
+    error,
+    mutate,
+  } = useSWR<Sub>(subName ? `/subs/${subName}` : null);
 
   useEffect(() => {
     if (!sub) return;
@@ -60,11 +64,13 @@ export default function SubPage() {
     formData.append("type", fileInputRef.current.name);
 
     try {
-      const res = await Axios.post<Sub>(`/subs/${sub.name}/image`, formData, {
+      await Axios.post<Sub>(`/subs/${sub.name}/image`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      mutate();
     } catch (err) {
       console.log(err);
     }
@@ -89,15 +95,20 @@ export default function SubPage() {
               onClick={() => onpenFileInput("banner")}
             >
               {sub.bannerUrl ? (
-                <div
+                <Image
                   className="h-56 bg-blue-500"
-                  style={{
-                    backgroundImage: `url(${sub.bannerUrl})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                ></div>
+                  src={sub.bannerUrl}
+                  alt="banner"
+                  height={100}
+                  width={700}
+                  layout="responsive"
+                  // style={{
+                  //   backgroundImage: `url(${sub.bannerUrl})`,
+                  //   backgroundRepeat: "no-repeat",
+                  //   backgroundSize: "cover",
+                  //   backgroundPosition: "center",
+                  // }}
+                />
               ) : (
                 <div className="h-20 bg-blue-500"></div>
               )}
