@@ -80,13 +80,13 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const sub = await Sub.findOneOrFail({ where: { name: req.params.name } });
 
-    if (sub.username !== user.username)
+    if (sub.username !== user.username) {
       return res.status(403).json({ error: "You dont own this sub" });
+    }
 
     res.locals.sub = sub;
     return next();
   } catch (err) {
-    console.log(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 };
@@ -119,19 +119,17 @@ const uploadSubImage = async (req: Request, res: Response) => {
     }
 
     let oldImageUrn: string = "";
-
     if (type === "image") {
       oldImageUrn = sub.imageUrn || "";
       sub.imageUrn = req.file?.filename!;
-    } else if (type === "banne") {
+    } else if (type === "banner") {
       oldImageUrn = sub.bannerUrn || "";
       sub.bannerUrn = req.file?.filename!;
     }
-
     await sub.save();
 
     if (oldImageUrn !== "") {
-      fs.unlinkSync(`public\\images\\{$oldImageUrn}`);
+      fs.unlinkSync(`public\\images\\${oldImageUrn}`);
     }
 
     return res.json(sub);
