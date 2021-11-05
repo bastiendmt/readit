@@ -102,12 +102,6 @@ export default function SubPage() {
                   height={100}
                   width={700}
                   layout="responsive"
-                  // style={{
-                  //   backgroundImage: `url(${sub.bannerUrl})`,
-                  //   backgroundRepeat: "no-repeat",
-                  //   backgroundSize: "cover",
-                  //   backgroundPosition: "center",
-                  // }}
                 />
               ) : (
                 <div className="h-20 bg-blue-500"></div>
