@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
+import Sidebar from "../../components/Sidebar";
 import { useAuthState } from "../../context/auth";
 import { Sub } from "../../types";
 
@@ -137,6 +138,7 @@ export default function SubPage() {
           {/* Posts & Sidebar */}
           <div className="container flex pt-5">
             <div className="w-160">{postsMarkup}</div>
+            <Sidebar sub={sub}/>
           </div>
         </>
       )}
