@@ -64,11 +64,18 @@ const getPost = async (req: Request, res: Response) => {
 
 const commentOnPost = async (req: Request, res: Response) => {
   const { identifier, slug } = req.params;
-  const { body } = req.body;
+  const body = req.body.body;
+  console.log('POSTING COMMENT ON POST', identifier)
+
   try {
     const post = await Post.findOneOrFail({ identifier, slug });
 
-    const comment = new Comment({ body, user: res.locals.user, post });
+    const comment = new Comment({
+      body,
+      user: res.locals.user,
+      post,
+    });
+
     await comment.save();
 
     return res.json(comment);

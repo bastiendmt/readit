@@ -1,4 +1,4 @@
-import Axios from "axios";
+import { default as axios, default as Axios } from "axios";
 import classnames from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -6,18 +6,20 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { comment } from "postcss";
+import { FormEvent, useState } from "react";
 import useSWR from "swr";
 import ActionButton from "../../../../components/ActionButton";
 import Sidebar from "../../../../components/Sidebar";
 import { useAuthState } from "../../../../context/auth";
-import { Post, Comment } from "../../../../types";
+import { Comment, Post } from "../../../../types";
 
 dayjs.extend(relativeTime);
 
 export default function PostPage() {
+  //Local state
+  const [newComment, setNewComment] = useState("");
   //Global state
-  const { authenticated } = useAuthState();
+  const { authenticated, user } = useAuthState();
 
   //Utils
   const router = useRouter();
@@ -52,6 +54,22 @@ export default function PostPage() {
       });
 
       mutate();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const submitComment = async (event: FormEvent) => {
+    event.preventDefault();
+    if (newComment.trim() === "") return;
+
+    try {
+      await axios.post(`/posts/${post.identifier}/${post.slug}/comments`, {
+        body: newComment,
+      });
+
+      setNewComment("");
+      mutate()
     } catch (err) {
       console.log(err);
     }
@@ -161,10 +179,34 @@ export default function PostPage() {
                 {/* Comment input areat */}
                 <div className="pl-10 pr-6 mb-4">
                   {authenticated ? (
-                    <p>Comment input</p>
+                    <div>
+                      <p className="mb-1 text-xs">
+                        Comment as{" "}
+                        <Link href={`/u/${user.username}`}>
+                          <a className="font-semibold text-blue-500">
+                            {user.username}
+                          </a>
+                        </Link>
+                        <form onSubmit={submitComment}>
+                          <textarea
+                            className="w-full p-3 border-gray-300 border focus:outline-none rounded focus:border-gray-600"
+                            onChange={(e) => setNewComment(e.target.value)}
+                            value={newComment}
+                          />
+                          <div className="flex justify-end">
+                            <button
+                              className="px-3 py-1 blue button"
+                              disabled={newComment.trim() === ""}
+                            >
+                              Comment
+                            </button>
+                          </div>
+                        </form>
+                      </p>
+                    </div>
                   ) : (
                     <div className="flex items-center px-2 py-2 border border-gray-200 justify-between rounded">
-                      <p className="text-gray-400 font-semibold">
+                      <p className="text-gray-400 font-semibold text-sm">
                         Log in or sign up to leave a comment
                       </p>
                       <div>
