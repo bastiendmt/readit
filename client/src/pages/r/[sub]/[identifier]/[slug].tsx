@@ -158,8 +158,30 @@ export default function PostPage() {
                     </div>
                   </div>
                 </div>
+                {/* Comment input areat */}
+                <div className="pl-10 pr-6 mb-4">
+                  {authenticated ? (
+                    <p>Comment input</p>
+                  ) : (
+                    <div className="flex items-center px-2 py-2 border border-gray-200 justify-between rounded">
+                      <p className="text-gray-400 font-semibold">
+                        Log in or sign up to leave a comment
+                      </p>
+                      <div>
+                        <Link href={"/login"}>
+                          <a className=" px-4 py-1 hollow blue mr-4 button">
+                            Login
+                          </a>
+                        </Link>
+                        <Link href={"/register"}>
+                          <a className=" px-4 py-1 blue button">Register</a>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <hr />
-                {/* Comments */}
+                {/* Comments feed */}
                 {comments?.map((comment) => (
                   <div className="flex" key={comment.identifier}>
                     {/* Vote section */}
