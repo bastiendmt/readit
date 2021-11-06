@@ -218,7 +218,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"First Post!!\",\r\n    \"body\":\"Post about React!\",\r\n    \"sub\": \"reacjs\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -226,7 +226,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/posts",
+							"raw": "http://localhost:5000/api/posts/bxpbV93/first",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -234,7 +234,32 @@
 							"port": "5000",
 							"path": [
 								"api",
-								"posts"
+								"posts",
+								"bxpbV93",
+								"first"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get post comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/posts/FyztVqe/i_ate_a_clock_yesterday_it_was_very_time_consuming/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"posts",
+								"FyztVqe",
+								"i_ate_a_clock_yesterday_it_was_very_time_consuming",
+								"comments"
 							]
 						}
 					},
@@ -273,6 +298,63 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get a sub",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/subs/funny",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"subs",
+								"funny"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Sub Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Bastien/Pictures/1200x680_alkpotefifou-0174-convertimage.jpg"
+								},
+								{
+									"key": "type",
+									"value": "image",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:5000/api/subs/funny/image",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"subs",
+								"funny",
+								"image"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -304,6 +386,26 @@
 								"api",
 								"misc",
 								"vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top subs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/misc/top-subs",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"misc",
+								"top-subs"
 							]
 						}
 					},
