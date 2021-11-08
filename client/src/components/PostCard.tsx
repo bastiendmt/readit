@@ -45,7 +45,7 @@ export default function PostCard({
   return (
     <div key={identifier} className="flex mb-4 rounded bg-white">
       {/* Vote section */}
-      <div className="w-10 py-3 text-center bg-grey-200 rounder-l">
+      <div className="w-10 py-3 text-center bg-gray-200 rounder-l">
         {/* Upvote */}
         <div
           className="w-6 mx-auto text-grey-400 rounder cursor hover:bg-gray-300 hover:text-red-500"
