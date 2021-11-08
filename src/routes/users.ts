@@ -1,9 +1,7 @@
 import { Request, Response, Router } from "express";
 import Comment from "../entities/Comment";
 import Post from "../entities/Post";
-import Sub from "../entities/Sub";
 import User from "../entities/User";
-import auth from "../middleware/auth";
 import user from "../middleware/user";
 
 const getUserSubmission = async (req: Request, res: Response) => {
@@ -20,7 +18,7 @@ const getUserSubmission = async (req: Request, res: Response) => {
 
     const comments = await Comment.find({
       where: { user },
-      relations: ["posts"],
+      relations: ["post"],
     });
 
     if (res.locals.user) {
