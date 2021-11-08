@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth";
 import postsRoutes from "./routes/posts";
 import subsRoutes from "./routes/subs";
 import miscRoutes from "./routes/misc";
+import usersRoutes from "./routes/users";
 import cors from "cors";
 
 dotven.config();
@@ -34,6 +35,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/subs", subsRoutes);
 app.use("/api/misc", miscRoutes);
+app.use("/api/users", usersRoutes);
 
 app.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
