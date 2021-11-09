@@ -1,17 +1,19 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Head from "next/head";
-import useSWR from "swr";
-import PostCard from "../components/PostCard";
-import { Post, Sub } from "../types";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from "swr";
+import PostCard from "../components/PostCard";
+import { useAuthState } from "../context/auth";
+import { Post, Sub } from "../types";
 
 dayjs.extend(relativeTime);
 
 export default function Home() {
   const { data: posts } = useSWR<Post[]>("/posts");
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
+  const { authenticated } = useAuthState();
 
   return (
     <>
@@ -60,6 +62,15 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            {authenticated && (
+              <div className="p-4 border-t-2">
+                <Link href="/subs/create">
+                  <a className="w-full button px-2 py-1 blue">
+                    Create Community
+                  </a>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
