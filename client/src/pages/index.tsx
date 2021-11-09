@@ -3,15 +3,15 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Head from "next/head";
 import useSWR from "swr";
 import PostCard from "../components/PostCard";
-import { Sub } from "../types";
+import { Post, Sub } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
 export default function Home() {
-  const { data: posts } = useSWR("/posts");
-  const { data: topSubs } = useSWR("/misc/top-subs");
+  const { data: posts } = useSWR<Post[]>("/posts");
+  const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
 
   return (
     <>
@@ -35,19 +35,21 @@ export default function Home() {
               </p>
             </div>
             <div>
-              {topSubs?.map((sub: Sub) => (
+              {topSubs?.map((sub) => (
                 <div
                   key={sub.name}
                   className="flex items-center px-4 py-2 text-xs border-b"
                 >
                   <Link href={`/r/${sub.name}`}>
-                    <Image
-                      src={sub.imageUrl}
-                      className="rounded-full cursor-pointer"
-                      alt="Sub"
-                      width={(6 * 16) / 4}
-                      height={(6 * 16) / 4}
-                    />
+                    <a>
+                      <Image
+                        src={sub.imageUrl}
+                        className="rounded-full cursor-pointer"
+                        alt="Sub"
+                        width={(6 * 16) / 4}
+                        height={(6 * 16) / 4}
+                      />
+                    </a>
                   </Link>
                   <Link href={`/r/${sub.name}`}>
                     <a className="ml-2 font-bold hover:cursor-pointer">
