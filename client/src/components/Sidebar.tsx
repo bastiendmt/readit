@@ -6,7 +6,7 @@ import Link from "next/link";
 const Sidebar = ({ sub }: { sub: Sub }) => {
   const { authenticated } = useAuthState();
   return (
-    <div className="ml-6 w-80">
+    <div className="hidden md:block ml-6 w-80 px-4 md:p-0">
       <div className="bg-white rounded">
         <div className="p-3 bg-blue-500 rounded-t">
           <p className="semi-bold text-white">About Community</p>

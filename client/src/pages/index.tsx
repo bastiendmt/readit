@@ -23,13 +23,13 @@ export default function Home() {
 
       <div className="container flex pt-4">
         {/* Posts feed */}
-        <div className="w-160">
+        <div className="w-full md:w-160">
           {posts?.map((post) => (
             <PostCard post={post} key={post.identifier} />
           ))}
         </div>
         {/* Sidebar */}
-        <div className="ml-6 w-80">
+        <div className="hidden md:block ml-6 w-80 px-4 md:p-0">
           <div className="bg-white rounded">
             <div className="p-4 border-2">
               <p className="text-lg font-semibold text-center">
