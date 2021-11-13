@@ -201,22 +201,22 @@ export default function PostPage() {
                             {user.username}
                           </a>
                         </Link>
-                        <form onSubmit={submitComment}>
-                          <textarea
-                            className="w-full p-3 border-gray-300 border focus:outline-none rounded focus:border-gray-600"
-                            onChange={(e) => setNewComment(e.target.value)}
-                            value={newComment}
-                          />
-                          <div className="flex justify-end">
-                            <button
-                              className="px-3 py-1 blue button"
-                              disabled={newComment.trim() === ""}
-                            >
-                              Comment
-                            </button>
-                          </div>
-                        </form>
                       </p>
+                      <form onSubmit={submitComment}>
+                        <textarea
+                          className="w-full p-3 border-gray-300 border focus:outline-none rounded focus:border-gray-600"
+                          onChange={(e) => setNewComment(e.target.value)}
+                          value={newComment}
+                        />
+                        <div className="flex justify-end">
+                          <button
+                            className="px-3 py-1 blue button"
+                            disabled={newComment.trim() === ""}
+                          >
+                            Comment
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   ) : (
                     <div className="flex items-center px-2 py-2 border border-gray-200 justify-between rounded">
