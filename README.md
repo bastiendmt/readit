@@ -1,6 +1,9 @@
 # Reddit clone
 I made this project following a course made by @hidjou
 
+## Preview
+![Readit preview](./preview/readit.gif)
+
 ## Stack used
 - NodeJS
 - Express
