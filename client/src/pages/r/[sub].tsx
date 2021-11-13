@@ -47,7 +47,7 @@ export default function SubPage() {
     postsMarkup = <p className="tex-lg text-center">No posts submitted yet</p>;
   } else {
     postsMarkup = sub.posts.map((post) => (
-      <PostCard key={post.identifier} post={post} />
+      <PostCard key={post.identifier} post={post} mutate={mutate}/>
     ));
   }
 
