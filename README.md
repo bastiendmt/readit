@@ -1,7 +1,27 @@
-# Awesome Project Build with TypeORM
+# Reddit clone
+I made this project following a course made by @hidjou
 
-Steps to run this project:
+## Stack used
+- NodeJS
+- Express
+- React
+- NextJS
+- TypeScript
+- TypeORM
+- Tailwind CSS
+- PostgreSQL
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+## Features
+- Login / Register
+  - Cookies
+- Authentification middleware
+- Posts
+  - Create
+  - Upvote / Downvote
+  - Search
+  - Comment, upvote / downvote comments
+- Sub
+  - Create
+  - Banner & Icon image
+- Infinite scrolling
+- Responsive
