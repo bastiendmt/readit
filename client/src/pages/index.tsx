@@ -3,7 +3,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import PostCard from "../components/PostCard";
 import { useAuthState } from "../context/auth";
 import { Post, Sub } from "../types";
@@ -11,9 +13,47 @@ import { Post, Sub } from "../types";
 dayjs.extend(relativeTime);
 
 export default function Home() {
-  const { data: posts } = useSWR<Post[]>("/posts");
+  const [observedPost, setObservedPost] = useState("");
+
   const { data: topSubs } = useSWR<Sub[]>("/misc/top-subs");
   const { authenticated } = useAuthState();
+
+  const {
+    data,
+    mutate,
+    size: page,
+    setSize: setPage,
+    isValidating,
+  } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`);
+
+  const posts: Post[] = data ? [].concat(...data) : [];
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) return;
+
+    const id = posts[posts.length - 1].identifier;
+
+    if (id !== observedPost) {
+      setObservedPost(id);
+      observeElement(document.getElementById(id));
+    }
+  }, [posts]);
+
+  const observeElement = (element: HTMLElement) => {
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting === true) {
+          console.log("REACHED BOTTOM");
+          observer.unobserve(element);
+          setPage(page + 1);
+        }
+      },
+      { threshold: 1 }
+    );
+    observer.observe(element);
+  };
 
   return (
     <>
@@ -24,9 +64,13 @@ export default function Home() {
       <div className="container flex pt-4">
         {/* Posts feed */}
         <div className="w-full md:w-160">
+          {isValidating && <p className="tex-lg text-center">Loading...</p>}
           {posts?.map((post) => (
-            <PostCard post={post} key={post.identifier} />
+            <PostCard post={post} key={post.identifier} mutate={mutate} />
           ))}
+          {isValidating && posts.length > 0 && (
+            <p className="tex-lg text-center">Loading more...</p>
+          )}
         </div>
         {/* Sidebar */}
         <div className="hidden md:block ml-6 w-80 px-4 md:p-0">
