@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { AppProps } from "next/app";
 import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
 import { SWRConfig } from "swr";
 import Navbar from "../components/Navbar";
 import { AuthProvider } from "../context/auth";
@@ -33,6 +34,9 @@ function App({ Component, pageProps }: AppProps) {
       }}
     >
       <AuthProvider>
+        <Head>
+          <title>Readit</title>
+        </Head>
         {!authRoute && <Navbar />}
         <div className={authRoute ? "" : "pt-12"}>
           <Component {...pageProps} />
