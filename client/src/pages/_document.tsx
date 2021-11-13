@@ -18,6 +18,18 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" type="image/svg+xml" href="/readit.svg" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <meta property="og:site_name" content="readit" />
+          <meta property="twitter:site_name" content="@readit" />
+          <meta property="twitter:card" content="summary" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:image"
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`}
+          />
+          <meta
+            property="twitter:image"
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/reddit.svg`}
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap"
             rel="stylesheet"
